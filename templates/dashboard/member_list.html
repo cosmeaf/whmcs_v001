@@ -1,0 +1,55 @@
+{% extends 'dashboard/base.html' %}
+
+{% block content %}
+<div class="container-fluid my-4">
+  <h1 class="h3 mb-4">Informações de Conta</h1>
+
+
+  <!-- Seção principal dentro de um card maior -->
+  <div class="card bg-dark text-light mb-4">
+    <div class="card-body">
+      <!-- Detalhes da Conta -->
+      <div class="mb-4">
+        <h5 class="text-purple">Detalhes da Conta</h5>
+        <hr class="bg-light">
+        <p class="small"><strong>Usuário:</strong> {{ member.username }}</p>
+        <p class="small"><strong>Espaço Disponível:</strong> {{ member.max_storage_mb }} MB</p>
+        <p class="small"><strong>Senha:</strong> <span class="text-danger">{{ member.password }}</span></p>
+        <p class="small"><strong>Último Login:</strong>
+          {% if member.last_login %}{{ member.last_login|date:"d-m-Y H:i" }} {% else %}-{% endif %}
+        </p>
+      </div>
+
+      <!-- Divisória -->
+      <hr class="bg-light">
+
+      <!-- Acesso SFTP/FTP -->
+      <div class="mb-4">
+        <h5 class="text-purple">Acesso SFTP/FTP</h5>
+        <p class="small">Para acessar seu espaço de armazenamento via SFTP ou FTP, use as seguintes credenciais:
+        </p>
+        <ul class="small">
+          <li><strong>Host:</strong> 92.113.32.240 </li>
+          <li><strong>Usuário:</strong> {{ member.username }}</li>
+          <li><strong>Senha:</strong> {{ member.password }}</li>
+          <li><strong>Porta:</strong> 22 (SFTP) ou 21 (FTP)</li>
+        </ul>
+        <p class="small">Você pode usar um cliente FTP como <a href="https://filezilla-project.org/"
+            target="_blank">FileZilla</a> ou <a href="https://winscp.net/" target="_blank">WinSCP</a> para se
+          conectar.</p>
+      </div>
+
+      <!-- Divisória -->
+      <hr class="bg-light">
+
+    </div>
+  </div>
+
+
+
+</div>
+
+<!-- Incluir o modal -->
+{% include 'modals/exclude_member.html' %}
+
+{% endblock %}

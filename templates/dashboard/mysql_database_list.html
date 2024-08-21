@@ -1,0 +1,64 @@
+{% extends "dashboard/base.html" %}
+
+{% block content %}
+<h1>Meus Bancos de Dados</h1>
+<div class="row">
+  <div class="col-md-3">
+    <a href="{% url 'mysql_create' %}" class="btn btn-sm btn-primary mb-3">Criar Banco</a>
+  </div>
+</div>
+<div class="card">
+  <div class="card-header">Banco de Dados</div>
+  <div class="card-body">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Nome do Banco de Dados</th>
+          <th>Usuário</th>
+          <th>Senha</th>
+          <th>Tamanho</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for db in databases %}
+        <tr>
+          <td>{{ db.db_name }}</td>
+          <td>{{ db.db_user }}</td>
+          <td>
+            <div class="input-group">
+              <input type="password" class="form-control" value="{{ db.db_password }}"
+                id="password{{ forloop.counter }}" readonly>
+              <button type="button" class="btn btn-outline-secondary"
+                onclick="togglePasswordVisibility({{ forloop.counter }})">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+          </td>
+          <td>{{ db.get_size_display }}</td>
+          <td>
+            <a href="#" class="btn btn-sm btn-warning">
+              <i class="fas fa-database"></i>
+            </a>
+            <a href="{% url 'mysql_delete' db.pk %}" class="btn btn-sm btn-danger">
+              <i class="fas fa-trash-alt"></i>
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  function togglePasswordVisibility(counter) {
+    let passwordField = document.getElementById("password" + counter);
+    if (passwordField.type === "password") {
+      passwordField.type = "text";
+    } else {
+      passwordField.type = "password";
+    }
+  }
+</script>
+{% endblock %}

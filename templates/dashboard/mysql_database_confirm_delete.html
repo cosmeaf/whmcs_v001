@@ -1,0 +1,11 @@
+{% extends "dashboard/base.html" %}
+
+{% block content %}
+<h1>Excluir Banco de Dados</h1>
+<p>Você tem certeza que deseja excluir o banco de dados <strong>{{ database.db_name }}</strong>?</p>
+<form method="post">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-danger">Excluir</button>
+  <a href="{% url 'mysql_list' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

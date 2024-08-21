@@ -1,0 +1,47 @@
+{% extends "dashboard/base.html" %}
+
+{% block content %}
+<h1>Criar Banco de Dados</h1>
+<form method="post">
+  {% csrf_token %}
+  <div class="mb-3">
+    <label for="db_name" class="form-label">Nome do Banco de Dados</label>
+    <input type="text" class="form-control" id="db_name" name="db_name" required>
+  </div>
+  <div class="mb-3">
+    <label for="db_user" class="form-label">Usuário do Banco de Dados</label>
+    <input type="text" class="form-control" id="db_user" name="db_user" value="{{ request.user.member.member_id }}"
+      readonly>
+  </div>
+  <div class="mb-3">
+    <label for="db_password" class="form-label">Senha do Banco de Dados</label>
+    <div class="input-group">
+      <input type="password" class="form-control" id="db_password" name="db_password">
+      <button type="button" class="btn btn-sm btn-success" onclick="generatePassword()">
+        <i class="fas fa-key"></i>
+      </button>
+      <button type="button" class="btn btn-sm btn-secondary" onclick="togglePasswordVisibility()">
+        <i class="fas fa-eye"></i>
+      </button>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary">Criar</button>
+</form>
+
+<script>
+  function generatePassword() {
+    let passwordField = document.getElementById("db_password");
+    let randomPassword = Math.random().toString(36).slice(-12); // Gera uma senha aleatória
+    passwordField.value = randomPassword;
+  }
+
+  function togglePasswordVisibility() {
+    let passwordField = document.getElementById("db_password");
+    if (passwordField.type === "password") {
+      passwordField.type = "text";
+    } else {
+      passwordField.type = "password";
+    }
+  }
+</script>
+{% endblock %}

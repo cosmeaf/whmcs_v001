@@ -1,0 +1,23 @@
+<!-- templates/modals/exclude_member.html -->
+<div class="modal fade" id="excludeMemberModal" tabindex="-1" aria-labelledby="excludeMemberModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="excludeMemberModalLabel">Excluir Conta de Membro</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Ao excluir sua conta de membro, todos os seus arquivos serão apagados e não será possível recuperá-los.</p>
+        <p>Você tem certeza de que deseja continuar?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <form method="post" action="#">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger">Sim, excluir</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

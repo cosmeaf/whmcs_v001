@@ -1,0 +1,63 @@
+{% extends 'dashboard/base.html' %}
+
+{% block content %}
+<div class="container-fluid my-4">
+  <h1 class="h3 mb-4">Subdomínios</h1>
+
+  <!-- Botão para criar novo subdomínio -->
+  <div class="mb-4 text-end">
+    <a href="{% url 'domain_create' %}" class="btn btn-primary">
+      <i class="fas fa-plus"></i> Novo
+    </a>
+  </div>
+
+  <!-- Card principal para exibir subdomínios -->
+  <div class="card bg-dark text-light mb-4">
+    <div class="card-header text-white">
+      Meus Subdomínios
+    </div>
+    <div class="card-body">
+      <table class="table table-sm table-hover table-bordered">
+        <thead class="thead-dark">
+          <tr>
+            <th>Subdomínio</th>
+            <th>URL Subdomínio</th>
+            <th>Requisições</th>
+            <th>Visitas</th>
+            <th>Total Arquivos</th>
+            <th>Tamanho</th>
+            <th class="text-center">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if domains %}
+          {% for domain in domains %}
+          <tr>
+            <td>{{ domain.subdomain }}</td>
+            <td>
+              <a href="https://{{ domain.subdomain }}.{{ request.get_host }}" target="_blank">
+                {{ domain.subdomain }}.{{ request.get_host }}
+              </a>
+            </td>
+            <td>{{ domain.requests }}</td>
+            <td>{{ domain.visitors }}</td>
+            <td>{{ domain.files_count }}</td>
+            <td>{{ domain.data_usage_kb }}</td>
+            <td class="text-center">
+              <a href="{% url 'domain_delete' domain.pk %}" class="btn btn-sm btn-danger" title="Excluir">
+                <i class="fas fa-trash-alt"></i>
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+          {% else %}
+          <tr>
+            <td colspan="7" class="text-center">Nenhum projeto criado ainda.</td>
+          </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

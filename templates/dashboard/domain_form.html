@@ -1,0 +1,13 @@
+{% extends 'dashboard/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h1>{% if form.instance.pk %}Editar Domínio{% else %}Adicionar Domínio{% endif %}</h1>
+<form method="POST">
+  {% csrf_token %}
+  {{ form|crispy }}
+  <button type="submit" class="btn btn-sm btn-success">Salvar</button>
+  <a href="{% url 'domain_list' %}" class="btn btn-sm btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

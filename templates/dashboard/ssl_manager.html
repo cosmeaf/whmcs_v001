@@ -1,0 +1,70 @@
+{% extends 'dashboard/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white text-center">
+          <h3>Configuração de SSL para {{ domain.name }}</h3>
+        </div>
+        <div class="card-body">
+          <!-- Início do Formulário -->
+          <form method="post">
+            {% csrf_token %}
+
+            <!-- Nome do Domínio -->
+            <div class="mb-3">
+              <label for="domainName" class="form-label">Enter domain name(s)*</label>
+              <input type="text" class="form-control" id="domainName"
+                value="{{ domain.subdomain }}.{{ request.get_host }}" readonly>
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+              <label for="email" class="form-label">Enter Email*</label>
+              <input type="email" class="form-control" id="email" name="email" placeholder="youremail@domain.com"
+                required>
+            </div>
+
+            <!-- Método de Validação -->
+            <div class="mb-3">
+              <label class="form-label">Validation Method</label><br>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="validation_method" id="httpValidation" value="HTTP"
+                  checked>
+                <label class="form-check-label" for="httpValidation">HTTP</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="validation_method" id="dnsValidation" value="DNS">
+                <label class="form-check-label" for="dnsValidation">DNS</label>
+              </div>
+            </div>
+
+            <!-- Lembrete de Expiração -->
+            <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" id="reminder" name="reminder">
+              <label class="form-check-label" for="reminder">Get a reminder 7 days before SSL expires.
+                (optional)</label>
+            </div>
+
+            <!-- Termos de Uso -->
+            <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" id="agreeTerms" name="agree_terms" required>
+              <label class="form-check-label" for="agreeTerms">Accept Let's Encrypt SA*</label>
+            </div>
+
+            <!-- Botão de Submissão -->
+            <div class="text-center">
+              <button type="submit" class="btn btn-danger btn-block">CREATE SSL CERTIFICATE</button>
+            </div>
+          </form>
+        </div>
+        <div class="card-footer text-center">
+          <a href="{% url 'domain_list' %}" class="btn btn-secondary">Voltar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
